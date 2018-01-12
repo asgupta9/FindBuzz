@@ -1,6 +1,7 @@
 package com.example.findbuzz.findbuzz;
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -36,9 +39,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.net.ResponseCache;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class ActivityHome extends AppCompatActivity {
@@ -58,13 +70,17 @@ public class ActivityHome extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private TabLayout tabLayout;
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    private CustomAdapter adapter;
+    private List<CardLayout> data_list;
 //    private RecyclerView recyclerView;
 
     // Creating JSON Parser object
 //    JSONParser jsonParser = new JSONParser();
 
 
-    private static final String INBOX_URL = " http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php ";
+    private static final String INBOX_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,16 +110,99 @@ public class ActivityHome extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position=tab.getPosition();
                 if(position==1){
-                    // fetch online cards
-//                    recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
-//                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//                    recyclerView.setLayoutManager(mLayoutManager);
-//
-//                    new HttpRequestLendData().execute(INBOX_URL);
-                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
+
+                    Log.d("Selected Teb 1: ", "onTabSelected: proceed to create recyclerviewcards");
+                    recyclerView=(RecyclerView)findViewById(R.id.recycler_view_lend_action_area);
+                    data_list= new ArrayList<>();
+
+//                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
+
+                    Log.d("Before Network call: ", "onTabSelected: load data from server");
+
+                    load_data_from_server(0);
+
+                    Log.d("After Network call: ", "onTabSelected: merging recyclerview with adapter and layout manager");
+
+                    gridLayoutManager=new GridLayoutManager(ActivityHome.this,2);
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    adapter=new CustomAdapter(ActivityHome.this,data_list);
+                    recyclerView.setAdapter(adapter);
+
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            if(gridLayoutManager.findLastCompletelyVisibleItemPosition()==data_list.size()-1){
+                                load_data_from_server(data_list.get(data_list.size()-1).getId());
+                            }
+                        }
+                    });
+
+
+                    //Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
                 }
                 else{}
             }
+
+            private void load_data_from_server(final int id) {
+              AsyncTask<Integer,Void,Void> task=new AsyncTask<Integer,Void,Void>(){
+
+                    private String url;
+
+                    @Override
+                    protected Void doInBackground(Integer... integers) {
+                        final OkHttpClient client=new OkHttpClient();
+                        final Response[] response = new Response[1];
+                        url=INBOX_URL+"?id="+id;
+                        Log.d(" Doinbackgroundurl ",""+url);
+
+                        final Request request=new Request.Builder().url(url).build();
+
+
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                if(!response.isSuccessful()){
+                                    throw new IOException("Unexpexted code"+response);
+                                }
+
+                                try {
+                                    JSONArray jsonArray = new JSONArray(response.body().string());
+                                    Log.d(" Doinbackgroundjson",jsonArray.toString());
+                                    for (int i = 0; i< jsonArray.length(); i++){
+                                        JSONObject object= jsonArray.getJSONObject(i);
+                                        Log.d(" Doinbackgroundjson",Integer.toString(i));
+                                        CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
+
+                                        data_list.add(cardLayout);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+//                      super.onPostExecute(aVoid);
+                        adapter.notifyDataSetChanged();
+                    }
+                };
+                task.execute(id);
+
+
+            }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
@@ -111,108 +210,7 @@ public class ActivityHome extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
-
-    //FETCHING ONLINE CARDS ONLINE
-
-    /*class HttpRequestLendData extends AsyncTask<String, Void, String> {
-        private ProgressDialog pDialog;
-        public static final String REQUEST_METHOD = "GET";
-        public static final int READ_TIMEOUT = 20000;
-        public static final int CONNECTION_TIMEOUT = 20000;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(ActivityHome.this);
-            pDialog.setMessage("Loading Inbox ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-        @Override
-        protected String doInBackground(String... params){
-            String stringUrl = params[0];
-            String result="";
-            String inputLine;
-            try {
-                //Create a URL object holding our url
-                URL myUrl = new URL(stringUrl);
-                //Create a connection
-                HttpURLConnection connection =(HttpURLConnection)
-                        myUrl.openConnection();
-                //Set methods and timeouts
-                connection.setRequestMethod(REQUEST_METHOD);
-                connection.setReadTimeout(READ_TIMEOUT);
-                connection.setConnectTimeout(CONNECTION_TIMEOUT);
-                //Connect to our url
-                connection.connect();
-                //Create a new InputStreamReader
-                InputStreamReader streamReader = new
-                        InputStreamReader(connection.getInputStream());
-                //Create a new buffered reader and String Builder
-                BufferedReader reader = new BufferedReader(streamReader);
-                StringBuilder stringBuilder = new StringBuilder();
-                //Check if the line we are reading is not null
-                while((inputLine = reader.readLine()) != null){
-                    stringBuilder.append(inputLine);
-                }
-                //Close our InputStream and Buffered reader
-                reader.close();
-                streamReader.close();
-                //Set our result equal to our stringBuilder
-                result = stringBuilder.toString();
-            }
-            catch(IOException e){
-                e.printStackTrace();
-                result = null;
-            }
-            return result;
-        }
-
-//        protected void onPostExecute(String result){
-//            super.onPostExecute(result);
-//            pDialog.hide();
-//
-////            convert returned server response from json object to java object
-//            JSONArray jsonArray;
-//            ArrayList<card_template> modelArrayList=new ArrayList<>();
-//            try {
-//
-//                jsonArray = new JSONArray(result);
-//                for (int i = 0; i < jsonArray.length(); i++) {
-//                    card_template model = new card_template();
-//                    JSONObject temp = jsonArray.getJSONObject(i);
-//                    model.request_id = temp.getString("rqst_id");
-//                    model.borrower_id = temp.getString("borrower_id");
-//                    model._description = temp.getString("description");
-//                    model.request_time = temp.getString("time");
-//
-//                    Log.d("JSON", "onPostExecute: "+model.request_id);
-//                    modelArrayList.add(model);
-//
-//
-//
-//
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//        }
-
-    }
-
-*/
 
     public void searchActivity(View view){
         //calling new search box activity

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.findbuzz.findbuzz">
 
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +14,9 @@
 
         <!-- Splash Screen Activity -->
         <activity android:name=".ActivitySplashScreen"></activity>
+
         <activity android:name=".ActivityOnBoarding" />
+
         <activity android:name=".ActivityHome">
 
             <!-- android:theme="@style/AppTheme"> -->
@@ -23,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ActivityFillSearchDetails"
             android:label="@string/title_activity_fill_search_details"
@@ -32,6 +37,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.findbuzz.findbuzz.ActivityHome" />
         </activity>
+
     </application>
 
 </manifest>
