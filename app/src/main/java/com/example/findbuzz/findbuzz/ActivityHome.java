@@ -123,7 +123,7 @@ public class ActivityHome extends AppCompatActivity {
 
                     Log.d("After Network call: ", "onTabSelected: merging recyclerview with adapter and layout manager");
 
-                    gridLayoutManager=new GridLayoutManager(ActivityHome.this,2);
+                    gridLayoutManager=new GridLayoutManager(ActivityHome.this,1);
                     recyclerView.setLayoutManager(gridLayoutManager);
                     adapter=new CustomAdapter(ActivityHome.this,data_list);
                     recyclerView.setAdapter(adapter);
@@ -153,41 +153,83 @@ public class ActivityHome extends AppCompatActivity {
                     @Override
                     protected Void doInBackground(Integer... integers) {
                         final OkHttpClient client=new OkHttpClient();
-                        final Response[] response = new Response[1];
+                        //final Response[] response = new Response[1];
                         url=INBOX_URL+"?id="+id;
                         Log.d(" Doinbackgroundurl ",""+url);
 
                         final Request request=new Request.Builder().url(url).build();
 
 
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                e.printStackTrace();
+                        try {
+
+                            Response response=client.newCall(request).execute();
+                            JSONArray jsonArray = new JSONArray(response.body().string());
+
+                            Log.d(" Doinbackgroundjson",jsonArray.toString());
+                            for (int i = 0; i< jsonArray.length(); i++){
+                                JSONObject object= jsonArray.getJSONObject(i);
+
+                                Log.d(" Doinbackgroundjson",Integer.toString(i));
+
+                                CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
+                                data_list.add(cardLayout);
+
                             }
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                if(!response.isSuccessful()){
-                                    throw new IOException("Unexpexted code"+response);
-                                }
+                            Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
+                            //adapter.notifyDataSetChanged();
 
-                                try {
-                                    JSONArray jsonArray = new JSONArray(response.body().string());
-                                    Log.d(" Doinbackgroundjson",jsonArray.toString());
-                                    for (int i = 0; i< jsonArray.length(); i++){
-                                        JSONObject object= jsonArray.getJSONObject(i);
-                                        Log.d(" Doinbackgroundjson",Integer.toString(i));
-                                        CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
 
-                                        data_list.add(cardLayout);
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+
+
+
+
+
+
+
+//                        client.newCall(request).enqueue(new Callback() {
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//                                if(!response.isSuccessful()){
+//                                    throw new IOException("Unexpexted code"+response);
+//                                }
+//
+//                                try {
+//                                    JSONArray jsonArray = new JSONArray(response.body().string());
+//                                    Log.d(" Doinbackgroundjson",jsonArray.toString());
+//                                    for (int i = 0; i< jsonArray.length(); i++){
+//                                        JSONObject object= jsonArray.getJSONObject(i);
+//                                        Log.d(" Doinbackgroundjson",Integer.toString(i));
+//                                        CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
+//                                        data_list.add(cardLayout);
+//
+//                                    }
+//
+//                                    Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
+//                                    adapter.notifyDataSetChanged();
+//
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+
+
+
+
 
                         return null;
                     }
@@ -196,6 +238,12 @@ public class ActivityHome extends AppCompatActivity {
                     protected void onPostExecute(Void aVoid) {
 //                      super.onPostExecute(aVoid);
                         adapter.notifyDataSetChanged();
+
+                        Log.d(" Doinbackgroundjson","mkkknnkvgghjbh");
+
+
+
+
                     }
                 };
                 task.execute(id);
