@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.findbuzz.findbuzz.ActivityFillSearchDetails"
+    tools:showIn="@layout/activity_fill_search_details">
+
+    <Spinner
+        android:padding="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="50dp"
+        android:autofillHints="@string/category_prompt"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category_prompt"
+        android:spinnerMode="dialog"
+
+        />
+
+    <EditText
+
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/categories"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape"
+        android:gravity="left"
+        android:hint="Brief Description of the need..."
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:textSize="12dp" />
+
+    <Button
+        android:textStyle="bold"
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="80dp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@string/action_sign_in"
+        android:text="PUT QUERY"
+        android:textSize="16dp" />
+
+</RelativeLayout>

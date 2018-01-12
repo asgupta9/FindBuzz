@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+
+        android:id="@+id/searchbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/rounded_edittext"
+        android:elevation="3dp"
+        android:ellipsize="middle"
+        android:ems="10"
+        android:gravity="center_vertical|center_horizontal"
+        android:hint="What are you looking for"
+        android:inputType="text"
+        android:onClick="searchActivity"
+        android:padding="10dp"
+        android:textSize="14dp" />
+
+</RelativeLayout>
