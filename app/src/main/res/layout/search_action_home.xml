@@ -26,4 +26,11 @@
         android:padding="10dp"
         android:textSize="14dp" />
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view_search_action_area"
+
+        />
 </RelativeLayout>

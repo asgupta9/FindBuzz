@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="category_arrays">
+    <string-array name="category_arrays"
+        >
         <item>Choose a Category...</item>
         <item>Books</item>
         <item>Electronics</item>

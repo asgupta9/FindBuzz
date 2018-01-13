@@ -13,7 +13,15 @@
         android:theme="@style/AppTheme">
 
         <!-- Splash Screen Activity -->
-        <activity android:name=".ActivitySplashScreen"></activity>
+        <activity android:name=".ActivitySplashScreen">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
         <activity android:name=".ActivityOnBoarding" />
 
@@ -21,18 +29,15 @@
 
             <!-- android:theme="@style/AppTheme"> -->
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".ActivityFillSearchDetails"
-            android:label="@string/title_activity_fill_search_details"
             android:parentActivityName=".ActivityHome"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.findbuzz.findbuzz.ActivityHome" />

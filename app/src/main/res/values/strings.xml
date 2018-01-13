@@ -6,10 +6,7 @@
     <string name="tab_text_1">Find</string>
     <string name="tab_text_2">Earn</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_fill_search_details">ActivityFillSearchDetails</string>
-
-
-
+    <string name="title_activity_fill_search_details">findBuzz</string>
 
 
     <string name="action_sign_in">Sign in or register</string>

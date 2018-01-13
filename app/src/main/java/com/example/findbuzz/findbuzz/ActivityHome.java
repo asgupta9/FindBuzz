@@ -80,7 +80,8 @@ public class ActivityHome extends AppCompatActivity {
 //    JSONParser jsonParser = new JSONParser();
 
 
-    private static final String INBOX_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
+    private static final String ACCORD_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
+    private static final String BORROW_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +143,11 @@ public class ActivityHome extends AppCompatActivity {
 
                     //Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
                 }
-                else{}
+                else{
+                    //find action area
+
+
+                }
             }
 
             private void load_data_from_server(final int id) {
@@ -150,16 +155,22 @@ public class ActivityHome extends AppCompatActivity {
 
                     private String url;
 
-                    @Override
+                  @Override
+                  protected void onPreExecute() {
+                      super.onPreExecute();
+                      pDialog = new ProgressDialog(ActivityHome.this);
+                      pDialog.setMessage("Loading Items ...");
+                      pDialog.setIndeterminate(false);
+                      pDialog.setCancelable(true);
+                      pDialog.show();
+                  }
+
+                  @Override
                     protected Void doInBackground(Integer... integers) {
                         final OkHttpClient client=new OkHttpClient();
-                        //final Response[] response = new Response[1];
-                        url=INBOX_URL+"?id="+id;
+                        url=ACCORD_URL+"?id="+id;
                         Log.d(" Doinbackgroundurl ",""+url);
-
                         final Request request=new Request.Builder().url(url).build();
-
-
                         try {
 
                             Response response=client.newCall(request).execute();
@@ -168,18 +179,12 @@ public class ActivityHome extends AppCompatActivity {
                             Log.d(" Doinbackgroundjson",jsonArray.toString());
                             for (int i = 0; i< jsonArray.length(); i++){
                                 JSONObject object= jsonArray.getJSONObject(i);
-
                                 Log.d(" Doinbackgroundjson",Integer.toString(i));
-
                                 CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
                                 data_list.add(cardLayout);
-
                             }
-
                             Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
                             //adapter.notifyDataSetChanged();
-
-
                         }
                         catch (IOException e) {
                             e.printStackTrace();
@@ -187,70 +192,17 @@ public class ActivityHome extends AppCompatActivity {
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
-
-
-
-
-
-//                        client.newCall(request).enqueue(new Callback() {
-//                            @Override
-//                            public void onFailure(Call call, IOException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                            @Override
-//                            public void onResponse(Call call, Response response) throws IOException {
-//                                if(!response.isSuccessful()){
-//                                    throw new IOException("Unexpexted code"+response);
-//                                }
-//
-//                                try {
-//                                    JSONArray jsonArray = new JSONArray(response.body().string());
-//                                    Log.d(" Doinbackgroundjson",jsonArray.toString());
-//                                    for (int i = 0; i< jsonArray.length(); i++){
-//                                        JSONObject object= jsonArray.getJSONObject(i);
-//                                        Log.d(" Doinbackgroundjson",Integer.toString(i));
-//                                        CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
-//                                        data_list.add(cardLayout);
-//
-//                                    }
-//
-//                                    Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
-//                                    adapter.notifyDataSetChanged();
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-
-
-
-
-
                         return null;
                     }
-
                     @Override
-                    protected void onPostExecute(Void aVoid) {
-//                      super.onPostExecute(aVoid);
+                    protected void onPostExecute(Void aVoid){
+                        pDialog.hide(); 
                         adapter.notifyDataSetChanged();
-
                         Log.d(" Doinbackgroundjson","mkkknnkvgghjbh");
-
-
-
-
                     }
                 };
                 task.execute(id);
-
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
@@ -283,6 +235,13 @@ public class ActivityHome extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if(id==R.id.action_profile){
+
+        }
+        if(id==R.id.action_logout){
+
         }
         return super.onOptionsItemSelected(item);
     }
