@@ -16,9 +16,9 @@
 
         <ImageView
             android:id="@+id/splashIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background" />
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@mipmap/ic_launcher_foreground" />
 
     </RelativeLayout>
 

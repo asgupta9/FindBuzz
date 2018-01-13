@@ -1,8 +1,10 @@
 package com.example.findbuzz.findbuzz;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -51,8 +53,18 @@ public class ActivityOnBoarding extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
 
                 //Toast.makeText(ActivityOnBoarding.this, "fgfd", Toast.LENGTH_SHORT).show();
+                // shared preference change
+
+
+                SharedPreferences.Editor sharedPreferencesEditor =
+                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                sharedPreferencesEditor.putBoolean(
+                        "COMPLETED_ONBOARDING_PREF_NAME", true);
+                sharedPreferencesEditor.apply();
+
                 Intent intent=new Intent(ActivityOnBoarding.this, ActivityHome.class);
                 startActivity(intent);
+
             }
         });
 
