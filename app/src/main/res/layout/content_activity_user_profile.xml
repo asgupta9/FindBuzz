@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.findbuzz.findbuzz.Activity_user_profile"
+    tools:showIn="@layout/activity_user_profile">
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/blank_view"
+        android:layout_height="200dp">
+
+    </View>
+
+    <ImageView
+        android:id="@+id/user_profile_image"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="108dp"
+        app:srcCompat="@drawable/icon1"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="34dp" />
+
+    <LinearLayout
+        android:layout_below="@+id/user_profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        android:id="@+id/layout1"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="243dp">
+
+        <TextView
+            android:inputType="textCapSentences"
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingTop="10dp"
+            android:text="TextView"
+            android:textAllCaps="true"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            tools:ignore="TextViewEdits" />
+
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:text="TextView"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_below="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="243dp">
+
+        <Button
+            android:id="@+id/logout_button"
+            android:background="@color/colorPrimaryDark"
+            android:text="LOGOUT"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

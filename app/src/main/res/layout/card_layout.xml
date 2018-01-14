@@ -56,22 +56,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="CALL"
+            android:layout_weight="2"
+            android:text="ACCEPT"
             android:textSize="10dp"
             android:background="@color/colorPrimaryDark"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             />
 
-        <Button
-            android:textSize="10dp"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:text="MESSAGE"
-            android:background="@android:color/white"
-            android:textStyle="bold"
-            android:layout_height="match_parent" />
+
     </LinearLayout>
 
 

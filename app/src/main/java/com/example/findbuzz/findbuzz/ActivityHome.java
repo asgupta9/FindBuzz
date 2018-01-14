@@ -114,6 +114,7 @@ public class ActivityHome extends AppCompatActivity {
 
                     Log.d("Selected Teb 1: ", "onTabSelected: proceed to create recyclerviewcards");
                     recyclerView=(RecyclerView)findViewById(R.id.recycler_view_lend_action_area);
+
                     data_list= new ArrayList<>();
 
 //                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
@@ -238,7 +239,8 @@ public class ActivityHome extends AppCompatActivity {
         }
 
         if(id==R.id.action_profile){
-
+            Intent intent=new Intent(ActivityHome.this,Activity_user_profile.class);
+            startActivity(intent);
         }
         if(id==R.id.action_logout){
 

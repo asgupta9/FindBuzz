@@ -62,7 +62,10 @@ public class ActivityOnBoarding extends AppCompatActivity {
                         "COMPLETED_ONBOARDING_PREF_NAME", true);
                 sharedPreferencesEditor.apply();
 
-                Intent intent=new Intent(ActivityOnBoarding.this, ActivityHome.class);
+
+                finish();
+
+                Intent intent=new Intent(ActivityOnBoarding.this, Activity_user_login.class);
                 startActivity(intent);
 
             }

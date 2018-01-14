@@ -12,4 +12,5 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="category_prompt">Select a Category...</string>
+    <string name="title_activity_user_profile">findBuzz profile</string>
 </resources>

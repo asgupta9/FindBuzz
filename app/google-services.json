@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "786914394849",
+    "project_id": "findbuzz-192109"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786914394849:android:1d96dcca6aa56e52",
+        "android_client_info": {
+          "package_name": "com.example.findbuzz.findbuzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786914394849-0cq7rhmc9qpbnjschrqnuffoev4b4ij6.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "786914394849-8gk84f09dnaabj4nme7hv7b11mfdqdm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findbuzz.findbuzz",
+            "certificate_hash": "c6aa410f8bcf48a83f6f4cb32bf7dca6dfc00b84"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoIqm4cwXJAdJyrwIaFp-_cef05oDfqIw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
