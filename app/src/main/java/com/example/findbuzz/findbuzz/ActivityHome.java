@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -69,11 +70,20 @@ public class ActivityHome extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
     private TabLayout tabLayout;
+
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewRequests;
+
     private GridLayoutManager gridLayoutManager;
+
     private CustomAdapter adapter;
+    private CustomAdapterRequest adapterRequest;
+
     private List<CardLayout> data_list;
+    private List<CardLayoutRequest> data_list_requests;
+
 //    private RecyclerView recyclerView;
 
     // Creating JSON Parser object
@@ -81,7 +91,7 @@ public class ActivityHome extends AppCompatActivity {
 
 
     private static final String ACCORD_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getRequest.php";
-    private static final String BORROW_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getRequest.php";
+    private static final String BORROW_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getMyRequests.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,17 +124,11 @@ public class ActivityHome extends AppCompatActivity {
 
                     Log.d("Selected Teb 1: ", "onTabSelected: proceed to create recyclerviewcards");
                     recyclerView=(RecyclerView)findViewById(R.id.recycler_view_lend_action_area);
-
                     data_list= new ArrayList<>();
-
-//                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
-
+//                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show()
                     Log.d("Before Network call: ", "onTabSelected: load data from server");
-
                     load_data_from_server(0);
-
                     Log.d("After Network call: ", "onTabSelected: merging recyclerview with adapter and layout manager");
-
                     gridLayoutManager=new GridLayoutManager(ActivityHome.this,1);
                     recyclerView.setLayoutManager(gridLayoutManager);
                     adapter=new CustomAdapter(ActivityHome.this,data_list);
@@ -147,15 +151,91 @@ public class ActivityHome extends AppCompatActivity {
                 else{
                     //find action area
 
+                    Log.d("Selected Teb 0: ", "onTabSelected: proceed to create recyclerviewcards for My requests");
+                    recyclerViewRequests=(RecyclerView)findViewById(R.id.recycler_view_search_action_area);
+                    data_list_requests= new ArrayList<>();
+//                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show()
+                    Log.d("Before Network call: ", "onTabSelected: load data from server");
+                    load_data_from_server_request(0);
+                    Log.d("After Network call: ", "onTabSelected: merging recyclerview with adapter and layout manager");
+                    gridLayoutManager=new GridLayoutManager(ActivityHome.this,1);
+                    recyclerViewRequests.setLayoutManager(gridLayoutManager);
+                    adapterRequest=new CustomAdapterRequest(ActivityHome.this,data_list_requests);
+                    recyclerViewRequests.setAdapter(adapterRequest);
+
+                    recyclerViewRequests.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            if(gridLayoutManager.findLastCompletelyVisibleItemPosition()==data_list_requests.size()-1){
+                                load_data_from_server_request(data_list_requests.get(data_list_requests.size()-1).getId());
+                            }
+                        }
+                    });
+
+
 
                 }
             }
 
+            private void load_data_from_server_request(final int id) {
+                AsyncTask<Integer,Void,Void> task=new AsyncTask<Integer,Void,Void>(){
+                    private String url;
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        pDialog = new ProgressDialog(ActivityHome.this);
+                        pDialog.setMessage("searching your requests :)");
+                        pDialog.setIndeterminate(false);
+                        pDialog.setCancelable(true);
+                        pDialog.show();
+                    }
+                    @Override
+                    protected Void doInBackground(Integer... integers) {
+                        SharedPreferences sharedPreferences=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                        final String email = sharedPreferences.getString("useremail","");
+                        final OkHttpClient client=new OkHttpClient();
+                        url=BORROW_URL+"?id="+id+"&emailid="+email;
+                        Log.d(" Doinbackgroundurl ",""+url);
+                        final Request request=new Request.Builder().url(url).build();
+                        try {
+                            Log.d("ServerResponse", "doInBackground: Inside try block trying to fetch response");
+                            Response response=client.newCall(request).execute();
+                            String jsonStr = response.body().string();
+                            Log.d("ServerResponse", "doInBackground: "+jsonStr);
+                            JSONArray jsonArray = new JSONArray(jsonStr);
+                            Log.d(" Doinbackgroundjson",jsonArray.toString());
+                            for (int i = 0; i< jsonArray.length(); i++){
+                                JSONObject object= jsonArray.getJSONObject(i);
+                                Log.d(" Doinbackgroundjson",Integer.toString(i));
+                                CardLayoutRequest cardLayout=new CardLayoutRequest(object.getString("requestDate"),object.getString("description"));
+                                data_list_requests.add(cardLayout);
+                            }
+                            Log.d(" Doinbackgroundjson",Integer.toString(data_list_requests.size()));
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                    @Override
+                    protected void onPostExecute(Void aVoid){
+                        pDialog.hide();
+                        adapterRequest.notifyDataSetChanged();
+                        Log.d(" Doinbackgroundjson","mkkknnkvgghjbh");
+                    }
+                };
+                task.execute(id);
+            }
+
+
             private void load_data_from_server(final int id) {
               AsyncTask<Integer,Void,Void> task=new AsyncTask<Integer,Void,Void>(){
-
-                    private String url;
-
+                  private String url;
                   @Override
                   protected void onPreExecute() {
                       super.onPreExecute();
@@ -165,27 +245,28 @@ public class ActivityHome extends AppCompatActivity {
                       pDialog.setCancelable(true);
                       pDialog.show();
                   }
-
                   @Override
                     protected Void doInBackground(Integer... integers) {
-                        final OkHttpClient client=new OkHttpClient();
-                        url=ACCORD_URL+"?id="+id;
+                      SharedPreferences sharedPreferences=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                      final String email = sharedPreferences.getString("useremail","");
+                      final OkHttpClient client=new OkHttpClient();
+                        url=ACCORD_URL+"?id="+id+"&emailid="+email;
                         Log.d(" Doinbackgroundurl ",""+url);
                         final Request request=new Request.Builder().url(url).build();
                         try {
-
+                            Log.d("ServerResponse", "doInBackground: Inside try block trying to fetch requests from other users");
                             Response response=client.newCall(request).execute();
-                            JSONArray jsonArray = new JSONArray(response.body().string());
-
+                            String jsonStr = response.body().string();
+                            Log.d("ServerResponse", "doInBackground: "+jsonStr);
+                            JSONArray jsonArray = new JSONArray(jsonStr);
                             Log.d(" Doinbackgroundjson",jsonArray.toString());
                             for (int i = 0; i< jsonArray.length(); i++){
                                 JSONObject object= jsonArray.getJSONObject(i);
                                 Log.d(" Doinbackgroundjson",Integer.toString(i));
-                                CardLayout cardLayout=new CardLayout(object.getInt("rqst_id"),object.getString("borrower_id"),object.getString("description"));
+                                CardLayout cardLayout=new CardLayout(object.getInt("requestId"),object.getString("borrowerId"),object.getString("description"));
                                 data_list.add(cardLayout);
                             }
                             Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
-                            //adapter.notifyDataSetChanged();
                         }
                         catch (IOException e) {
                             e.printStackTrace();
@@ -204,6 +285,9 @@ public class ActivityHome extends AppCompatActivity {
                 };
                 task.execute(id);
             }
+
+
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
@@ -212,6 +296,8 @@ public class ActivityHome extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void searchActivity(View view){
         //calling new search box activity

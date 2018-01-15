@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@drawable/shadow_card_layout"
+    android:weightSum="4">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <TextView
+            android:text="Textview"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/request_date"
+            android:gravity="right"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1.5"
+            android:padding="30dp"
+            android:shadowColor="@color/colorPrimary"
+            android:shadowDy="@android:integer/config_longAnimTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/request_description"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:textSize="15dp"
+            />
+
+        <TextView
+            android:text="3"
+            android:gravity="center_horizontal|center_vertical"
+            android:textStyle="bold"
+            android:layout_margin="2dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:id="@+id/number_of_responses"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/view_responses"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="View Responses"
+            android:textSize="12dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

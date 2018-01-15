@@ -23,38 +23,9 @@ import static android.content.ContentValues.TAG;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
 
-
-
-//    public static class ViewHolder extends RecyclerView.ViewHolder
-//
-//        implements View.OnClickListener{
-//        private String mItem;
-//        private TextView mTextView;
-//
-//        public ViewHolder(View view) {
-//            super(view);
-//            view.setOnClickListener(this);
-//            mTextView = (TextView) view;
-//        }
-//
-//        public void setItem(String item) {
-//            mItem = item;
-//            mTextView.setText(item);
-//        }
-//
-//        @Override
-//        public void onClick(View view) {
-//            Log.d(TAG, "onClick " + getPosition() + " " + mItem);
-//        }
-//
-//
-//
-//    }
-
-
-
     private Context context;
     private List<CardLayout> cardLayout;
+
     public CustomAdapter(Context context, List<CardLayout> cardLayout) {
         this.context = context;
         this.cardLayout = cardLayout;
