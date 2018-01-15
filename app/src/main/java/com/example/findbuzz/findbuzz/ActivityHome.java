@@ -80,8 +80,8 @@ public class ActivityHome extends AppCompatActivity {
 //    JSONParser jsonParser = new JSONParser();
 
 
-    private static final String ACCORD_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
-    private static final String BORROW_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getrqst.php";
+    private static final String ACCORD_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getRequest.php";
+    private static final String BORROW_URL = "http://home.iitj.ac.in/~sah.1/CFD2018/getRequest.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

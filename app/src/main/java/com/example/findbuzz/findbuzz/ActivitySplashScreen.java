@@ -46,8 +46,8 @@ public class ActivitySplashScreen extends AppCompatActivity {
 
 //                    Toast.makeText(ActivitySplashScreen.this, "", Toast.LENGTH_SHORT).show();
 
-                    if(isloggedin=="1"){
-
+                    if(isloggedin.equals("1") ){
+                        Log.d("Checking user LogIn", "run: Already Logged in using google redirecting to ActivityHome");
                         Intent myIntent = new Intent(ActivitySplashScreen.this,
                                 ActivityHome.class);
                         startActivity(myIntent);
@@ -55,6 +55,7 @@ public class ActivitySplashScreen extends AppCompatActivity {
 
                     }
                     else{
+                        Log.d("Checking user LogIn", "run: User not Logged in using google redirecting to Activity_user_login");
 
                         Intent myIntent = new Intent(ActivitySplashScreen.this,
                                 Activity_user_login.class);
