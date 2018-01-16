@@ -145,24 +145,17 @@ public class ActivityHome extends AppCompatActivity {
                         }
                     });
 
-
-                    //Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     //find action area
 
-                    Log.d("Selected Teb 0: ", "onTabSelected: proceed to create recyclerviewcards for My requests");
                     recyclerViewRequests=(RecyclerView)findViewById(R.id.recycler_view_search_action_area);
                     data_list_requests= new ArrayList<>();
-//                    Toast.makeText(ActivityHome.this, "312", Toast.LENGTH_SHORT).show()
-                    Log.d("Before Network call: ", "onTabSelected: load data from server");
                     load_data_from_server_request(0);
-                    Log.d("After Network call: ", "onTabSelected: merging recyclerview with adapter and layout manager");
                     gridLayoutManager=new GridLayoutManager(ActivityHome.this,1);
                     recyclerViewRequests.setLayoutManager(gridLayoutManager);
                     adapterRequest=new CustomAdapterRequest(ActivityHome.this,data_list_requests);
                     recyclerViewRequests.setAdapter(adapterRequest);
-
                     recyclerViewRequests.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 

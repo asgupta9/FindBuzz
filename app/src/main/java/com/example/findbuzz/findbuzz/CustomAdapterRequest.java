@@ -25,45 +25,29 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
 
     private Context context;
     private List<CardLayoutRequest> cardLayout;
-
     public CustomAdapterRequest(Context context, List<CardLayoutRequest> cardLayout) {
         this.context = context;
         this.cardLayout = cardLayout;
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_request,parent,false);
         return new ViewHolder(itemView);
-
     }
-
-
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.requestDate.setText(cardLayout.get(position).getDate());
         holder.requestDescription.setText(cardLayout.get(position).getRequestDescription());
-
-
         //holder.numberOfResponses.setText(cardLayout.get(position).getNumberOfResponses());
-
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 int tempId=cardLayout.get(position).getId();
-
                 Intent intent=new Intent(v.getContext(),ActivityRequestDetails.class);
                 intent.putExtra("requestId",tempId);
                 context.startActivity(intent);
-
             }
         });
-
-
-
-
     }
 
     @Override
@@ -91,10 +75,7 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
 
         @Override
         public void onClick(View v) {
-
-
 //            Log.d(TAG,"hello");
-
 //            AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create(); //Read Update
 //            alertDialog.setTitle("hi");
 //            alertDialog.setMessage("this is my app");
@@ -107,15 +88,6 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
 //
 //            Log.d(TAG,"hello");
 //            alertDialog.show();  //<-- See This!
-
-
-
         }
     }
-
-
-
-
-
-
 }
