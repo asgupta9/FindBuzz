@@ -15,11 +15,17 @@ class CardLayoutRequest {
     private String requestDescription;
     private int numberOfResponses;
 
-    public CardLayoutRequest(String date, String requestDescription) {
+
+
+
+    public CardLayoutRequest(int id,String date, String requestDescription) {
+
+        this.id=id;
         this.requestDate = date;
         this.requestDescription = requestDescription;
         this.numberOfResponses = 0;
     }
+
     public CardLayoutRequest(String date, String requestDescription, int numberOfResponses) {
         this.requestDate = date;
         this.requestDescription = requestDescription;

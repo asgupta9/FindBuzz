@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/custom_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="TextView" />
+
+    <!--<LinearLayout-->
+        <!--android:layout_below="@+id/custom_dialog_title"-->
+        <!--android:id="@+id/linearlayout1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:weightSum="2"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:paddingBottom="10dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<TextView-->
+            <!--android:id="@+id/custom_dialog_username"-->
+            <!--android:layout_weight="1.5"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:textSize="8dp"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--<TextView-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:id="@+id/custom_dialog_date"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:textSize="8dp"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--/>-->
+    <!--</LinearLayout>-->
+    <TextView
+        android:id="@+id/custom_dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/custom_dialog_title"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="12dp"
+        android:text="TextView"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/custom_dialog_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_dialog_description"
+        android:layout_margin="10dp"
+        android:textSize="12dp"
+        android:hint="Enter the price you expect(per hour)..."
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/custom_dialog_remark"
+        android:layout_margin="10dp"
+        android:textSize="12dp"
+        android:hint="Additional Remarks"
+        android:layout_below="@+id/custom_dialog_price"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/custom_dialog_remark"
+        android:background="@color/colorPrimaryDark"
+        android:text="SUBMIT"
+        android:id="@+id/xsubmit"
+        android:textColor="@android:color/white"
+        />
+
+</RelativeLayout>

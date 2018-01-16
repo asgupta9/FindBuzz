@@ -2,11 +2,15 @@ package com.example.findbuzz.findbuzz;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,10 +40,30 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.requestDate.setText(cardLayout.get(position).getDate());
         holder.requestDescription.setText(cardLayout.get(position).getRequestDescription());
-//        holder.numberOfResponses.setText(cardLayout.get(position).getNumberOfResponses());
+
+
+        //holder.numberOfResponses.setText(cardLayout.get(position).getNumberOfResponses());
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                int tempId=cardLayout.get(position).getId();
+
+                Intent intent=new Intent(v.getContext(),ActivityRequestDetails.class);
+                intent.putExtra("requestId",tempId);
+                context.startActivity(intent);
+
+            }
+        });
+
+
+
+
     }
 
     @Override
@@ -51,12 +75,17 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
             implements View.OnClickListener
     {
         public TextView requestDate,requestDescription,numberOfResponses;
+        private LinearLayout linearLayout;
+        private Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            linearLayout=(LinearLayout)itemView.findViewById(R.id.card_view_request);
             requestDate=(TextView) itemView.findViewById(R.id.request_date);
             requestDescription=(TextView) itemView.findViewById(R.id.request_description);
             numberOfResponses=(TextView) itemView.findViewById(R.id.number_of_responses);
+
 
         }
 

@@ -19,7 +19,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".ActivityOnBoarding" />
         <activity android:name=".ActivityHome">
@@ -36,16 +35,19 @@
                 android:value="com.example.findbuzz.findbuzz.ActivityHome" />
         </activity>
 
-        <activity android:name=".Activity_user_login">
-
-        </activity>
+        <activity android:name=".Activity_user_login" />
 
         <activity
             android:name=".Activity_user_profile"
             android:label="@string/title_activity_user_profile"
+            android:parentActivityName=".ActivityHome" />
+
+        <activity android:name=".ActivityRequestDetails"
             android:parentActivityName=".ActivityHome">
 
+
         </activity>
+
     </application>
 
 </manifest>

@@ -200,19 +200,14 @@ public class ActivityHome extends AppCompatActivity {
                         Log.d(" Doinbackgroundurl ",""+url);
                         final Request request=new Request.Builder().url(url).build();
                         try {
-                            Log.d("ServerResponse", "doInBackground: Inside try block trying to fetch response");
                             Response response=client.newCall(request).execute();
                             String jsonStr = response.body().string();
-                            Log.d("ServerResponse", "doInBackground: "+jsonStr);
                             JSONArray jsonArray = new JSONArray(jsonStr);
-                            Log.d(" Doinbackgroundjson",jsonArray.toString());
                             for (int i = 0; i< jsonArray.length(); i++){
                                 JSONObject object= jsonArray.getJSONObject(i);
-                                Log.d(" Doinbackgroundjson",Integer.toString(i));
-                                CardLayoutRequest cardLayout=new CardLayoutRequest(object.getString("requestDate"),object.getString("description"));
+                                CardLayoutRequest cardLayout=new CardLayoutRequest(object.getInt("requestId"),object.getString("requestDate"),object.getString("description"));
                                 data_list_requests.add(cardLayout);
                             }
-                            Log.d(" Doinbackgroundjson",Integer.toString(data_list_requests.size()));
                         }
                         catch (IOException e) {
                             e.printStackTrace();
@@ -254,19 +249,14 @@ public class ActivityHome extends AppCompatActivity {
                         Log.d(" Doinbackgroundurl ",""+url);
                         final Request request=new Request.Builder().url(url).build();
                         try {
-                            Log.d("ServerResponse", "doInBackground: Inside try block trying to fetch requests from other users");
                             Response response=client.newCall(request).execute();
                             String jsonStr = response.body().string();
-                            Log.d("ServerResponse", "doInBackground: "+jsonStr);
                             JSONArray jsonArray = new JSONArray(jsonStr);
-                            Log.d(" Doinbackgroundjson",jsonArray.toString());
-                            for (int i = 0; i< jsonArray.length(); i++){
-                                JSONObject object= jsonArray.getJSONObject(i);
-                                Log.d(" Doinbackgroundjson",Integer.toString(i));
-                                CardLayout cardLayout=new CardLayout(object.getInt("requestId"),object.getString("borrowerId"),object.getString("description"));
+                            for (int i = 0; i< jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                CardLayout cardLayout = new CardLayout(object.getInt("requestId"), object.getString("borrowerId"), object.getString("description"));
                                 data_list.add(cardLayout);
                             }
-                            Log.d(" Doinbackgroundjson",Integer.toString(data_list.size()));
                         }
                         catch (IOException e) {
                             e.printStackTrace();
