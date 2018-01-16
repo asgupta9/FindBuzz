@@ -8,10 +8,10 @@ public class RequestResponsesCardLayout {
 
 
     private String username,remark,date;
-    private int price;
-    private  int id;
+    private String price;
+    private String id;
 
-    public RequestResponsesCardLayout(String username, String remark, String date, int price, int id) {
+    public RequestResponsesCardLayout(String username, String remark, String date, String price, String id) {
         this.username = username;
         this.remark = remark;
         this.date = date;
@@ -43,19 +43,19 @@ public class RequestResponsesCardLayout {
         this.date = date;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

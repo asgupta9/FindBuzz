@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
@@ -29,6 +30,7 @@ import static android.content.ContentValues.TAG;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
 
+
     private Context context;
     private List<CardLayout> cardLayout;
 
@@ -40,6 +42,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout,parent,false);
+
         return new ViewHolder(itemView);
 
     }
@@ -54,56 +57,63 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             public void onClick(View v) {
 
 
-                //  CUSTOM DIALOG
 
-                final Dialog dialog = new Dialog(v.getContext());
-                dialog.setContentView(R.layout.lend_custom_dialog);
-                dialog.setTitle("Title...");
+        //  CUSTOM DIALOG
 
-                // set the custom dialog components - text, image and button
-                TextView title = (TextView) dialog.findViewById(R.id.custom_dialog_title);
+        final Dialog dialog = new Dialog(v.getContext());
+        dialog.setContentView(R.layout.lend_custom_dialog);
+        dialog.setTitle("Title...");
+
+        // set the custom dialog components - text, image and button
+        TextView title = (TextView) dialog.findViewById(R.id.custom_dialog_title);
 //                TextView name = (TextView) dialog.findViewById(R.id.custom_dialog_username);
 //                TextView date = (TextView) dialog.findViewById(R.id.custom_dialog_date);
-                TextView description = (TextView) dialog.findViewById(R.id.custom_dialog_description);
-                final EditText price = (EditText) dialog.findViewById(R.id.custom_dialog_price);
-                final EditText remark = (EditText) dialog.findViewById(R.id.custom_dialog_remark);
+        TextView description = (TextView) dialog.findViewById(R.id.custom_dialog_description);
+        final EditText price = (EditText) dialog.findViewById(R.id.custom_dialog_price);
+        final EditText remark = (EditText) dialog.findViewById(R.id.custom_dialog_remark);
 
-                title.setText("Electronics");
+        title.setText("Electronics");
 //                name.setText(cardLayout.get(position).getUsername());
-                description.setText(cardLayout.get(position).getUserdescription());
+        description.setText(cardLayout.get(position).getUserdescription());
 //                date.setText("12/1/2018");
 
 
-                Button dialogButton = (Button) dialog.findViewById(R.id.xsubmit);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String new_request_url = "http://home.iitj.ac.in/~sah.1/CFD2018/addResponse.php";
-                        String email = cardLayout.get(position).getUsername();
-                        String data = null;
-                        try {
-                            data = URLEncoder.encode("lenderId", "UTF-8")
-                                    + "=" + URLEncoder.encode(email, "UTF-8");
-                            data += "&" + URLEncoder.encode("price", "UTF-8")
-                                    + "=" + URLEncoder.encode(price.getText().toString(), "UTF-8");
-                            data += "&" + URLEncoder.encode("requestId", "UTF-8")
-                                    + "=" + URLEncoder.encode(Integer.toString(cardLayout.get(position).getId()), "UTF-8");
+        Button dialogButton = (Button) dialog.findViewById(R.id.xsubmit);
+        // if button is clicked, close the custom dialog
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String new_request_url = "http://home.iitj.ac.in/~sah.1/CFD2018/addResponse.php";
+                //String email = cardLayout.get(position).getUsername();
+                SharedPreferences sharedPreferences=context.getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                final String name = sharedPreferences.getString("username","");
+                final String email = sharedPreferences.getString("useremail","");
 
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("Check POST Data", "handleResult: generated data: "+data);
-                        new POST_data_on_server().execute(new_request_url, data);
+                String data = null;
+                try {
+                    data = URLEncoder.encode("lenderId", "UTF-8")
+                            + "=" + URLEncoder.encode(email, "UTF-8");
+                    data += "&" + URLEncoder.encode("price", "UTF-8")
+                            + "=" + URLEncoder.encode(price.getText().toString(), "UTF-8");
+                    data += "&" + URLEncoder.encode("remark", "UTF-8")
+                            + "=" + URLEncoder.encode(remark.getText().toString(), "UTF-8");
+                    data += "&" + URLEncoder.encode("requestId", "UTF-8")
+                            + "=" + URLEncoder.encode(Integer.toString(cardLayout.get(position).getId()), "UTF-8");
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Log.d("Check POST Data", "handleResult: generated data: "+data);
+                new POST_data_on_server().execute(new_request_url, data);
 
 
-                        dialog.dismiss();
+                dialog.dismiss();
 
-                        //NEW ASYNTASK THREAD FOR UPDATING DATABASE
-                    }
-                });
+                //NEW ASYNTASK THREAD FOR UPDATING DATABASE
+            }
+        });
 
-                dialog.show();
+        dialog.show();
 
 
             }

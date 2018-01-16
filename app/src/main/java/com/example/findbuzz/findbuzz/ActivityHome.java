@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,6 +85,9 @@ public class ActivityHome extends AppCompatActivity {
     private List<CardLayout> data_list;
     private List<CardLayoutRequest> data_list_requests;
 
+    private SwipeRefreshLayout rMyRequestsLayout;
+    private SwipeRefreshLayout rOthersRequestsLayout;
+
 //    private RecyclerView recyclerView;
 
     // Creating JSON Parser object
@@ -103,6 +107,22 @@ public class ActivityHome extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        rMyRequestsLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshMyRequests);
+//        rMyRequestsLayout.setOnRefreshListener(
+//                new SwipeRefreshLayout.OnRefreshListener() {
+//                    @Override
+//                    public void onRefresh() {
+//                        Log.i("SwipeRefresh", "onRefresh called from SwipeRefreshLayout");
+//
+//                        // This method performs the actual data-refresh operation.
+//                        // The method calls setRefreshing(false) when it's finished.
+//                    }
+//                }
+//        );
+
+//        rOthersRequestsLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshOhtersRequests);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -278,6 +298,9 @@ public class ActivityHome extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
+
+
     }
 
 

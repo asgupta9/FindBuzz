@@ -44,7 +44,8 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
             public void onClick(View v) {
                 int tempId=cardLayout.get(position).getId();
                 Intent intent=new Intent(v.getContext(),ActivityRequestDetails.class);
-                intent.putExtra("requestId",tempId);
+                intent.putExtra("requestId",Integer.toString(tempId));
+//                Log.d("RequestId of CardLayout", "Received request id:  "+Integer.toString(tempId));
                 context.startActivity(intent);
             }
         });
