@@ -215,10 +215,11 @@ public class ActivityHome extends AppCompatActivity {
                         try {
                             Response response=client.newCall(request).execute();
                             String jsonStr = response.body().string();
+                            Log.d("json", "doInBackground: "+jsonStr);
                             JSONArray jsonArray = new JSONArray(jsonStr);
                             for (int i = 0; i< jsonArray.length(); i++){
                                 JSONObject object= jsonArray.getJSONObject(i);
-                                CardLayoutRequest cardLayout=new CardLayoutRequest(object.getInt("requestId"),object.getString("requestDate"),object.getString("description"));
+                                CardLayoutRequest cardLayout=new CardLayoutRequest(object.getInt("requestId"),object.getString("requestDate"),object.getString("description"), object.getString("count") );
                                 data_list_requests.add(cardLayout);
                             }
                         }

@@ -38,7 +38,7 @@ public class CustomAdapterRequest extends RecyclerView.Adapter<CustomAdapterRequ
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.requestDate.setText(cardLayout.get(position).getDate());
         holder.requestDescription.setText(cardLayout.get(position).getRequestDescription());
-        //holder.numberOfResponses.setText(cardLayout.get(position).getNumberOfResponses());
+        holder.numberOfResponses.setText(Integer.toString(cardLayout.get(position).getNumberOfResponses()));
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

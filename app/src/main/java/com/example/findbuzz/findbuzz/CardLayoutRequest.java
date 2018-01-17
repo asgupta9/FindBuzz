@@ -18,12 +18,12 @@ class CardLayoutRequest {
 
 
 
-    public CardLayoutRequest(int id,String date, String requestDescription) {
+    public CardLayoutRequest(int id,String date, String requestDescription, String count ) {
 
         this.id=id;
         this.requestDate = date;
         this.requestDescription = requestDescription;
-        this.numberOfResponses = 0;
+        this.numberOfResponses = Integer.parseInt(count);
     }
 
     public CardLayoutRequest(String date, String requestDescription, int numberOfResponses) {
