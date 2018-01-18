@@ -34,20 +34,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.findbuzz.findbuzz.ActivityHome" />
         </activity>
-
         <activity android:name=".Activity_user_login" />
-
         <activity
             android:name=".Activity_user_profile"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".ActivityHome" />
+        <activity
+            android:name=".ActivityRequestDetails"
+            android:parentActivityName=".ActivityHome"></activity>
+        // services
+        <service android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
-        <activity android:name=".ActivityRequestDetails"
-            android:parentActivityName=".ActivityHome">
-
-
-        </activity>
-
+        <activity
+            android:name=".ActivityPhoneAddressDetails"
+            android:label="@string/title_activity_phone_address_details"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -1,33 +1,27 @@
 {
   "project_info": {
-    "project_number": "786914394849",
-    "project_id": "findbuzz-192109"
+    "project_number": "522695295137",
+    "firebase_url": "https://find-buzz.firebaseio.com",
+    "project_id": "find-buzz",
+    "storage_bucket": "find-buzz.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:786914394849:android:1d96dcca6aa56e52",
+        "mobilesdk_app_id": "1:522695295137:android:1d96dcca6aa56e52",
         "android_client_info": {
           "package_name": "com.example.findbuzz.findbuzz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "786914394849-0cq7rhmc9qpbnjschrqnuffoev4b4ij6.apps.googleusercontent.com",
+          "client_id": "522695295137-t39dfdb90s4cp57d19dri46gdvcv30gq.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "786914394849-8gk84f09dnaabj4nme7hv7b11mfdqdm1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.findbuzz.findbuzz",
-            "certificate_hash": "c6aa410f8bcf48a83f6f4cb32bf7dca6dfc00b84"
-          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAoIqm4cwXJAdJyrwIaFp-_cef05oDfqIw"
+          "current_key": "AIzaSyAlzyYk7PyOWhbIgom_poYLKj7Y4sgqyjU"
         }
       ],
       "services": {
@@ -39,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

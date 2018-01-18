@@ -282,7 +282,7 @@ public class ActivityHome extends AppCompatActivity {
                     }
                     @Override
                     protected void onPostExecute(Void aVoid){
-                        pDialog.hide(); 
+                        pDialog.hide();
                         adapter.notifyDataSetChanged();
                         Log.d(" Doinbackgroundjson","mkkknnkvgghjbh");
                     }

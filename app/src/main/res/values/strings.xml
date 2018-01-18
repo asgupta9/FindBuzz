@@ -14,4 +14,5 @@
     <string name="category_prompt">Select a Category...</string>
     <string name="title_activity_user_profile">findBuzz profile</string>
     <string name="title_activity_request_details">ActivityRequestDetails</string>
+    <string name="title_activity_phone_address_details">ActivityPhoneAddressDetails</string>
 </resources>
