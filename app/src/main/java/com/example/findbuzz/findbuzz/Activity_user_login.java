@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,18 +51,25 @@ public class Activity_user_login extends AppCompatActivity implements View.OnCli
     private GoogleApiClient googleApiClient;
     private static final int REQ_CODE=9001;
 
+    private static String UseremailId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("test");
+        FirebaseInstanceId.getInstance().getToken();
 
         Log.d("Login Screen Check", "onCreateLoginScreenScreen: ");
         signInButton=(SignInButton)findViewById(R.id.google_sign_in_button);
         signInButton.setOnClickListener(this);
         GoogleSignInOptions signInOptions=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi(Auth.GOOGLE_SIGN_IN_API,signInOptions).build();
+    }
 
-
+    public static String getUseremailId() {
+        return UseremailId;
     }
 
     @Override
@@ -96,10 +106,16 @@ public class Activity_user_login extends AppCompatActivity implements View.OnCli
 
             GoogleSignInAccount account= result.getSignInAccount();
 
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String _token=preferences.getString("token", null);
+
+            Log.d("this token",_token);
+
             String name=account.getDisplayName();
             String email=account.getEmail();
             String img_url=account.getPhotoUrl().toString();
 
+            UseremailId = email;
             Log.d("Debugging Google Auth", "handleResult: checking handleResult function");
             //Toast.makeText(this, "received"+name+email, Toast.LENGTH_LONG).show();
 
@@ -128,11 +144,22 @@ public class Activity_user_login extends AppCompatActivity implements View.OnCli
 
                 data += "&" + URLEncoder.encode("address", "UTF-8")
                         + "=" + URLEncoder.encode(" ", "UTF-8");
+
+                data += "&" + URLEncoder.encode("token", "UTF-8")
+                        + "=" + URLEncoder.encode(_token, "UTF-8");
+
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+
             Log.d("Check POST Data", "handleResult: generated data: "+data);
             new POST_data_on_server().execute(new_user_url, data);
+
+            //  firebase
+
+            //
+
+
 
 
             String getUserDetails = "http://home.iitj.ac.in/~sah.1/CFD2018/getUserDetails.php";
@@ -213,6 +240,9 @@ public class Activity_user_login extends AppCompatActivity implements View.OnCli
         }
 
     }
+
+
+
 
 
 }

@@ -97,7 +97,7 @@ public class ActivityRequestDetails extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(jsonStr);
                     for (int i = 0; i< jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        RequestResponsesCardLayout cardLayout = new RequestResponsesCardLayout(object.getString("lenderId"), object.getString("remark"), object.getString("date"), object.getString("price"), object.getString("responseId"));
+                        RequestResponsesCardLayout cardLayout = new RequestResponsesCardLayout(object.getString("name"), object.getString("remark"), object.getString("date"), object.getString("price"), object.getString("responseId"), object.getString("lenderId"));
                         data_list.add(cardLayout);
                     }
                 }

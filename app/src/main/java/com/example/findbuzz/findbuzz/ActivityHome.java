@@ -268,7 +268,7 @@ public class ActivityHome extends AppCompatActivity {
                             JSONArray jsonArray = new JSONArray(jsonStr);
                             for (int i = 0; i< jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                CardLayout cardLayout = new CardLayout(object.getInt("requestId"), object.getString("borrowerId"), object.getString("description"));
+                                CardLayout cardLayout = new CardLayout(object.getInt("requestId"), object.getString("name"), object.getString("borrowerId"), object.getString("description"));
                                 data_list.add(cardLayout);
                             }
                         }
