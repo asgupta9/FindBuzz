@@ -3,6 +3,8 @@ package com.example.findbuzz.findbuzz;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
@@ -20,6 +22,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void showNotification(String message) {
 
+        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent i = new Intent(this,Activity_user_login.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -27,9 +30,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("FCM Test")
+                .setContentTitle("findBuzz")
                 .setContentText(message)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setSmallIcon(R.mipmap.ic_launcher_findbuzz)
+                .setSound(uri)
                 .setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
